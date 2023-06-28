@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/product', ProductController::class);
+Route::post('/product/import', [ProductController::class, 'import']);

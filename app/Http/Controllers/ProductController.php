@@ -26,6 +26,8 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
+        dd($request);
+
         $product = Product::create([
             Product::NAME => $request->name,
             Product::CALORIES => $request->calories,
@@ -44,7 +46,7 @@ class ProductController extends Controller
     {
         $product = Product::find($productId);
 
-        if(!$product) {
+        if (!$product) {
             throw new Error(
                 "Produto não encontrado",
                 Response::HTTP_NOT_FOUND
@@ -61,7 +63,7 @@ class ProductController extends Controller
     {
         $product = Product::find($productId);
 
-        if(!$product) {
+        if (!$product) {
             throw new Error(
                 "Produto não encontrado",
                 Response::HTTP_NOT_FOUND
@@ -88,7 +90,7 @@ class ProductController extends Controller
     {
         $product = Product::find($productId);
 
-        if(!$product) {
+        if (!$product) {
             throw new Error(
                 "Produto não encontrado",
                 Response::HTTP_NOT_FOUND
@@ -102,9 +104,18 @@ class ProductController extends Controller
 
     public function import(Request $request)
     {
-        $products = $request->file('produtos');
+        if (!$request->has('produtos')) {
+            return response(
+                'Nenhum arquivo foi enviado',
+                Response::HTTP_BAD_REQUEST
+            );
+        }
 
-        (new ProductImport)->import( $products, null, \Maatwebsite\Excel\Excel::XLSX);
+        (new ProductImport)->import(
+            $request->file('produtos'),
+            null,
+            \Maatwebsite\Excel\Excel::XLSX
+        );
 
         return response('', Response::HTTP_OK);
     }

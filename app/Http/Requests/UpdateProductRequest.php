@@ -12,7 +12,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,10 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             Product::NAME => ['required', 'string'],
-            Product::CALORIES => ['required', 'float'],
-            Product::PROTEINS => ['required', 'float'],
-            Product::CARBS => ['required', 'float'],
-            Product::LIPIDS => ['required', 'float'],
+            Product::CALORIES => ['required', 'numeric'],
+            Product::PROTEINS => ['required', 'numeric'],
+            Product::CARBS => ['required', 'numeric'],
+            Product::LIPIDS => ['required', 'numeric'],
         ];
     }
 }
