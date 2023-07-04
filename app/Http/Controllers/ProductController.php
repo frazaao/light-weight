@@ -26,8 +26,6 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        dd($request);
-
         $product = Product::create([
             Product::NAME => $request->name,
             Product::CALORIES => $request->calories,
